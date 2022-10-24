@@ -1,9 +1,14 @@
 import type { NextPage } from 'next'
+import { Typography } from '@mui/material'
 
-const Home: NextPage = () => {
+import { WebLayout } from '@components/layouts'
+
+const InicioPage: NextPage = () => {
   return (
-    <h1>Lagalm</h1>
+    <WebLayout title='Inicio' pageDescription='Página de Incio'>
+      <Typography variant='h1' component='h1'>Inicio</Typography>
+    </WebLayout>
   )
 }
 
-export default Home
+export default InicioPage
