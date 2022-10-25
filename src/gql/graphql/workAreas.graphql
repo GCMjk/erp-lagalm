@@ -1,0 +1,18 @@
+query GetWorkAreas {
+  workAreas {
+    status
+    message
+    workAreas {
+      id
+      title
+      description
+      details {
+        status
+        creatorUserId
+        creatorUser {
+          name
+        }
+      }
+    }
+  }
+}

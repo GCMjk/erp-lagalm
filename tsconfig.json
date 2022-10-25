@@ -4,6 +4,8 @@
     "paths": {
       "@pages/*": ["pages/*"],
       "@components/*": ["components/*"],
+      "@conf/*": ["conf/*"],
+      "@gql/*": ["gql/*"],
       "@themes/*": ["themes/*"],
       "@styles/*": ["styles/*"],
     },

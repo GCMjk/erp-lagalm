@@ -1,13 +1,16 @@
 import NextLink from 'next/link'
 import { Chip, Link, Grid, Typography } from '@mui/material'
 
+import { useQuery } from '@apollo/client'
+
 import { ErpLayout } from '@components/layouts'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
+import { GetWorkAreasDocument } from '@gql/graphql'
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 50 },
-    { field: 'title', headerName: 'Titulo', width: 150 },
-    { field: 'description', headerName: 'Descripción', width: 200 },
+    { field: 'title', headerName: 'Titulo', width: 200 },
+    { field: 'description', headerName: 'Descripción', width: 250 },
     {
         field: 'available',
         headerName: 'Disponilble',
@@ -37,12 +40,20 @@ const columns: GridColDef[] = [
     }
 ]
 
-const rows = [
-    { id: 1, title: 'Programador', description: 'Descripcion del puesto', available: true },
-    { id: 2, title: 'Programador', description: 'Descripcion del puesto', available: false },
-]
-
 const AreaTrabajoPage = () => {
+
+    const { data, loading } = useQuery(GetWorkAreasDocument);
+    const rows = data?.workAreas?.workAreas?.map(({ id, title, description, details: { status } }) => {
+        return {
+            id,
+            title,
+            description,
+            available: status
+        }
+    })
+
+    if (loading) return <p>Cargando...</p>
+
     return (
         <ErpLayout title='Areas de trabajo' pageDescription='Listado de areas de trabajo'>
             <Typography variant='h2' component='h2'>Listado de las areas de trabajo</Typography>
@@ -51,7 +62,7 @@ const AreaTrabajoPage = () => {
             <Grid container marginTop={4}>
                 <Grid item xs={12} sx={{ height: 650, width: '100%' }}>
                     <DataGrid
-                        rows={rows}
+                        rows={rows || []}
                         columns={columns}
                         pageSize={10}
                         rowsPerPageOptions={[10]}
