@@ -6,3 +6,4 @@ export * from './Footer';
 // Erp
 export * from './Header';
 export * from './Sidebar';
+export * from './LoadingScreen';

@@ -6,6 +6,7 @@ import { useQuery } from '@apollo/client'
 import { ErpLayout } from '@components/layouts'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import { GetWorkAreasDocument } from '@gql/graphql'
+import { LoadingScreen } from '@components/ui'
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 50 },
@@ -52,7 +53,7 @@ const AreaTrabajoPage = () => {
         }
     })
 
-    if (loading) return <p>Cargando...</p>
+    if (loading) return <LoadingScreen />
 
     return (
         <ErpLayout title='Areas de trabajo' pageDescription='Listado de areas de trabajo'>
