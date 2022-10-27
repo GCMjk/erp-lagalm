@@ -1,0 +1,16 @@
+fragment AddressFragment on Address {
+    street
+    number {
+        interior
+        exterior
+    }
+    colony
+    municipality
+    state
+    country
+    zipCode
+    streets {
+        a
+        b
+    }
+}

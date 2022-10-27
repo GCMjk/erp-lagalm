@@ -1,11 +1,11 @@
 import NextLink from 'next/link'
 import { Chip, Link, Grid, Typography } from '@mui/material'
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
 import { useQuery } from '@apollo/client'
+import { GetWorkAreasDocument } from '@gql/graphql'
 
 import { ErpLayout } from '@components/layouts'
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
-import { GetWorkAreasDocument } from '@gql/graphql'
 import { LoadingScreen } from '@components/ui'
 
 const columns: GridColDef[] = [
@@ -41,7 +41,7 @@ const columns: GridColDef[] = [
     }
 ]
 
-const AreaTrabajoPage = () => {
+const AreaTrabajosPage = () => {
 
     const { data, loading } = useQuery(GetWorkAreasDocument);
     const rows = data?.workAreas?.workAreas?.map(({ id, title, description, details: { status } }) => {
@@ -75,4 +75,4 @@ const AreaTrabajoPage = () => {
     )
 }
 
-export default AreaTrabajoPage
+export default AreaTrabajosPage

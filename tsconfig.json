@@ -5,6 +5,7 @@
       "@pages/*": ["pages/*"],
       "@components/*": ["components/*"],
       "@conf/*": ["conf/*"],
+      "@hooks/*": ["hooks/*"],
       "@gql/*": ["gql/*"],
       "@themes/*": ["themes/*"],
       "@styles/*": ["styles/*"],
