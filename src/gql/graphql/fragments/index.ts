@@ -8,3 +8,5 @@ export * from './rrhh/workArea'
 export * from './rrhh/vacant'
 
 export * from './sales/customer'
+
+export * from './purchases/supplier'
