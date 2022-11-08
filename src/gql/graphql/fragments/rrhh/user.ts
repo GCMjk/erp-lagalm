@@ -27,6 +27,7 @@ export const userFragment = gql`
         infonavitCredit
         job {
             workAreaId {
+                id
                 title
                 description
             }

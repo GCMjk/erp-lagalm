@@ -6,6 +6,7 @@ export const vacantFragment = gql`
     fragment VacantFragment on RrhhVacant {
         id
         workAreaId {
+            id
             title
             description
         }

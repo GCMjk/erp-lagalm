@@ -29,13 +29,6 @@ export const supplierFragment = gql`
         productId {
             id
             name
-            description
-            type {
-                type
-                description
-            }
-            brand
-            audited
         }
         details {
             ...DetailsFragment

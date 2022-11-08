@@ -10,9 +10,9 @@ export const permissionFragment = gql`
         type
         reason
         userId {
+            id
             name
             lastname
-            email
         }
         from
         to

@@ -1,6 +1,6 @@
 const ProveedorPage = () => {
     return (
-        <div>Proveedor de clientes</div>
+        <div>Proveedor de compras</div>
     )
 }
 

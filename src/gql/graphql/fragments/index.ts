@@ -12,3 +12,4 @@ export * from './sales/customer'
 export * from './sales/prospect'
 
 export * from './purchases/supplier'
+export * from './purchases/product'
