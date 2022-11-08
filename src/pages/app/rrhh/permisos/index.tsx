@@ -44,9 +44,9 @@ const columns: GridColDef[] = [
         sortable: false,
         renderCell: (params: GridRenderCellParams) => {
             return (
-                <NextLink href={`/app/permisos/${params.row.id}`} passHref>
+                <NextLink href={`/app/rrhh/permisos/${params.row.id}`} passHref>
                     <Link underline='always'>
-                        Ver permiso
+                        Ver elemento
                     </Link>
                 </NextLink>
             )

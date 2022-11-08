@@ -1,7 +1,8 @@
 import gql from "graphql-tag"
-import { addressFragment, detailsFragment } from "@gql/graphql/fragments"
+import { contactFragment, addressFragment, detailsFragment } from "@gql/graphql/fragments"
 
 export const supplierFragment = gql`
+    ${contactFragment}
     ${addressFragment}
     ${detailsFragment}
     fragment SupplierFragment on PurchaseSupplier {
@@ -13,16 +14,7 @@ export const supplierFragment = gql`
             url
         }
         infoContact {
-            email
-            phone
-            web
-            personalizedContact {
-                title
-                name
-                position
-                email
-                phone
-            }
+            ...ContactFragment
         }
         address {
             ...AddressFragment

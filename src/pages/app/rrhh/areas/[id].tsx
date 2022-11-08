@@ -1,7 +1,7 @@
-const AreaTrabajo = () => {
+const AreaTrabajoPage = () => {
     return (
-        <div>AreaTrabajo</div>
+        <div>Area de trabajo en RRHH</div>
     )
 }
 
-export default AreaTrabajo
+export default AreaTrabajoPage

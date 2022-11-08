@@ -3,30 +3,28 @@ import { Chip, Link, Grid, Typography } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
 import { useQuery } from '@apollo/client'
-import { GetSuppliersDocument } from '@gql/graphql'
+import { GetProspectsDocument } from '@gql/graphql'
 
 import { ErpLayout } from '@components/layouts'
 import { LoadingScreen } from '@components/ui'
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', flex: 1 },
-    { field: 'name', headerName: 'Nombre', flex: 1 },
+    { field: 'company', headerName: 'Empresa', flex: 1 },
+    { field: 'businessActivity', headerName: 'Actividad empresarial', flex: 1 },
+    { field: 'phone', headerName: 'Teléfono', flex: 1 },
     { field: 'email', headerName: 'Correo', flex: 1 },
-    { field: 'address', headerName: 'Dirección', flex: 1 },
-    { field: 'rfc', headerName: 'RFC', flex: 1 },
+    { field: 'message', headerName: 'Mensaje', flex: 1 },
+    { field: 'lastMatch', headerName: 'Ultimo contacto', flex: 1 },
     {
-        field: 'classification',
-        headerName: 'Clasificación',
+        field: 'attended',
+        headerName: 'Atendido',
         flex: 1,
         renderCell: (params: GridRenderCellParams) => {
             return (
-                params.row.classification === 'A'
-                    ? <Chip color='success' label='A' variant='filled' />
-                    : params.row.classification === 'B'
-                        ? <Chip color='warning' label='B' variant='filled' />
-                        : params.row.classification === 'C'
-                            ? <Chip color='error' label='C' variant='filled' />
-                            : <Chip color='info' label='Indefinido' variant='outlined' />
+                params.row.attended
+                    ? <Chip color='success' label='Atendido' variant='outlined' />
+                    : <Chip color='error' label='No atendido' variant='outlined' />
             )
         }
     },
@@ -49,7 +47,7 @@ const columns: GridColDef[] = [
         sortable: false,
         renderCell: (params: GridRenderCellParams) => {
             return (
-                <NextLink href={`/app/compras/proveedores/${params.row.id}`} passHref>
+                <NextLink href={`/app/ventas/prospectos/${params.row.id}`} passHref>
                     <Link underline='always'>
                         Ver elemento
                     </Link>
@@ -59,27 +57,29 @@ const columns: GridColDef[] = [
     }
 ]
 
-const ProveedoresPage = () => {
+const ProspectosPage = () => {
 
-    const { data, loading } = useQuery(GetSuppliersDocument);
-    const rows = data?.suppliers?.suppliers?.map(({ id, name, infoContact, address, taxes, classification, details: { status } }) => {
-        const fullAddress = `${address?.street} ${address?.number?.exterior}${address?.number?.interior}, ${address?.colony}, ${address?.municipality}, ${address?.state}, ${address?.zipCode}`
+    const { data, loading } = useQuery(GetProspectsDocument);
+    const rows = data?.prospects?.prospects?.map(({ id, company, businessActivity, contact, message, matches, attended, details }) => {
+        const lastMatch = matches?.slice(-1)[0];
         return {
             id,
-            name,
-            email: infoContact?.email,
-            address: address ? fullAddress : "No hay dirección registrada",
-            rfc: taxes?.type === "DIRECTO" ? taxes?.rfc : taxes?.type,
-            classification,
-            available: status
+            company,
+            businessActivity,
+            phone: contact?.phone,
+            email: contact?.email,
+            message,
+            lastMatch,
+            attended,
+            available: details?.status
         }
     })
 
     if (loading) return <LoadingScreen />
 
     return (
-        <ErpLayout title='Proveedores' pageDescription='Listado de proveedores'>
-            <Typography variant='h2' component='h2'>Listado de proveedores</Typography>
+        <ErpLayout title='Prospectos' pageDescription='Listado de prospectos'>
+            <Typography variant='h2' component='h2'>Listado de prospectos</Typography>
 
 
             <Grid container marginTop={4}>
@@ -97,4 +97,4 @@ const ProveedoresPage = () => {
     )
 }
 
-export default ProveedoresPage
+export default ProspectosPage

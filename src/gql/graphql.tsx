@@ -75,47 +75,8 @@ export type AddressStreetsInput = {
   b?: InputMaybe<Scalars['String']>;
 };
 
-export type ContactPersonalized = {
-  __typename?: 'ContactPersonalized';
-  /** Contact email */
-  email?: Maybe<Scalars['String']>;
-  /** Contact name */
-  name?: Maybe<Scalars['String']>;
-  /** Contact phone */
-  phone?: Maybe<Scalars['String']>;
-  /** Job position */
-  position?: Maybe<Scalars['String']>;
-  /** Title of the person */
-  title?: Maybe<PersonalizedTitleEnum>;
-};
-
-export type ContactPersonalizedInput = {
-  /** Contact email */
-  email: Scalars['String'];
-  /** Contact name */
-  name: Scalars['String'];
-  /** Contact phone */
-  phone?: InputMaybe<Scalars['String']>;
-  /** Job position */
-  position?: InputMaybe<Scalars['String']>;
-  /** Title of the person */
-  title?: InputMaybe<PersonalizedTitleEnum>;
-};
-
-/** Purpose of contact */
-export enum ContactWorkPositionEnum {
-  Compras = 'COMPRAS',
-  Desarrollador = 'DESARROLLADOR',
-  Gerente = 'GERENTE',
-  Mercadotecnia = 'MERCADOTECNIA',
-  Otros = 'OTROS',
-  RecursosHumanos = 'RECURSOS_HUMANOS',
-  Sistemas = 'SISTEMAS',
-  Ventas = 'VENTAS'
-}
-
-export type CustomerContact = {
-  __typename?: 'CustomerContact';
+export type Contact = {
+  __typename?: 'Contact';
   /** Provider email */
   email?: Maybe<Scalars['String']>;
   /** Personalized contacts */
@@ -126,7 +87,7 @@ export type CustomerContact = {
   web?: Maybe<Scalars['String']>;
 };
 
-export type CustomerContactInput = {
+export type ContactInput = {
   /** Provider email */
   email: Scalars['String'];
   /** Personalized contacts */
@@ -135,6 +96,33 @@ export type CustomerContactInput = {
   phone: Scalars['String'];
   /** Provider website */
   web?: InputMaybe<Scalars['String']>;
+};
+
+export type ContactPersonalized = {
+  __typename?: 'ContactPersonalized';
+  /** Contact email */
+  email?: Maybe<Scalars['String']>;
+  /** Contact name */
+  name?: Maybe<Scalars['String']>;
+  /** Contact phone */
+  phone?: Maybe<Scalars['String']>;
+  /** Title of the person */
+  title?: Maybe<PersonalizedTitleEnum>;
+  /** Job position */
+  workPosition?: Maybe<WorkPositionEnum>;
+};
+
+export type ContactPersonalizedInput = {
+  /** Contact email */
+  email: Scalars['String'];
+  /** Contact name */
+  name: Scalars['String'];
+  /** Contact phone */
+  phone?: InputMaybe<Scalars['String']>;
+  /** Title of the person */
+  title?: InputMaybe<PersonalizedTitleEnum>;
+  /** Job position */
+  workPosition?: InputMaybe<WorkPositionEnum>;
 };
 
 export type Details = {
@@ -186,11 +174,13 @@ export type Mutation = {
   /** New contact */
   addContact?: Maybe<RrhhContactResult>;
   /** New customer */
-  addCustomer?: Maybe<SaleCustomerResult>;
+  addCustomer?: Maybe<SalesCustomerResult>;
   /** New permission */
   addPermission?: Maybe<RrhhPermissionResult>;
   /** New product */
   addProduct?: Maybe<PurchaseProductResult>;
+  /** New prospect */
+  addProspect?: Maybe<SalesProspectResult>;
   /** New requisition */
   addRequisition?: Maybe<PurchaseRequisitionResult>;
   /** New supplier */
@@ -202,11 +192,13 @@ export type Mutation = {
   /** Delete contact */
   deleteContact?: Maybe<RrhhContactResult>;
   /** Delete customer */
-  deleteCustomer?: Maybe<SaleCustomerResult>;
+  deleteCustomer?: Maybe<SalesCustomerResult>;
   /** Delete permission */
   deletePermission?: Maybe<RrhhPermissionResult>;
   /** Delete product */
   deleteProduct?: Maybe<PurchaseProductResult>;
+  /** Delete prospect */
+  deleteProspect?: Maybe<SalesProspectResult>;
   /** Delete requisition */
   deleteRequisition?: Maybe<PurchaseRequisitionResult>;
   /** Delete supplier */
@@ -224,11 +216,13 @@ export type Mutation = {
   /** Update contact */
   updateContact?: Maybe<RrhhContactResult>;
   /** Update customer */
-  updateCustomer?: Maybe<SaleCustomerResult>;
+  updateCustomer?: Maybe<SalesCustomerResult>;
   /** Update permission */
   updatePermission?: Maybe<RrhhPermissionResult>;
   /** Update product */
   updateProduct?: Maybe<PurchaseProductResult>;
+  /** Update prospect */
+  updateProspect?: Maybe<SalesProspectResult>;
   /** Update requisition */
   updateRequisition?: Maybe<PurchaseRequisitionResult>;
   /** Update supplier */
@@ -248,7 +242,7 @@ export type MutationAddContactArgs = {
 
 
 export type MutationAddCustomerArgs = {
-  customer: SaleCustomerInput;
+  customer: SalesCustomerInput;
 };
 
 
@@ -259,6 +253,11 @@ export type MutationAddPermissionArgs = {
 
 export type MutationAddProductArgs = {
   product: PurchaseProductInput;
+};
+
+
+export type MutationAddProspectArgs = {
+  prospect: SalesProspectInput;
 };
 
 
@@ -298,6 +297,11 @@ export type MutationDeletePermissionArgs = {
 
 
 export type MutationDeleteProductArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationDeleteProspectArgs = {
   id: Scalars['ID'];
 };
 
@@ -345,7 +349,7 @@ export type MutationUpdateContactArgs = {
 
 
 export type MutationUpdateCustomerArgs = {
-  customer: SaleCustomerInput;
+  customer: SalesCustomerInput;
   id: Scalars['ID'];
 };
 
@@ -359,6 +363,12 @@ export type MutationUpdatePermissionArgs = {
 export type MutationUpdateProductArgs = {
   id: Scalars['ID'];
   product: PurchaseProductInput;
+};
+
+
+export type MutationUpdateProspectArgs = {
+  id: Scalars['ID'];
+  prospect: SalesProspectInput;
 };
 
 
@@ -542,7 +552,7 @@ export type PurchaseSupplier = {
   details: Details;
   id: Scalars['ID'];
   /** Contact information */
-  infoContact?: Maybe<SupplierContact>;
+  infoContact?: Maybe<Contact>;
   /** Logo */
   logo?: Maybe<Image>;
   /** Supplier name */
@@ -565,7 +575,7 @@ export type PurchaseSupplierInput = {
   /** Item creator and modifier details */
   details?: InputMaybe<DetailsInput>;
   /** Contact information */
-  infoContact: SupplierContactInput;
+  infoContact: ContactInput;
   /** Logo */
   logo?: InputMaybe<Scalars['Upload']>;
   /** Supplier name */
@@ -603,9 +613,9 @@ export type Query = {
   /** Show list of contacts */
   contacts?: Maybe<RrhhContactsResult>;
   /** Show item customer */
-  customer?: Maybe<SaleCustomerResult>;
+  customer?: Maybe<SalesCustomerResult>;
   /** Show list of customers */
-  customers?: Maybe<SaleCustomersResult>;
+  customers?: Maybe<SalesCustomersResult>;
   /** Token Authentication */
   me?: Maybe<ResultUser>;
   /** Show item permission */
@@ -616,6 +626,10 @@ export type Query = {
   product?: Maybe<PurchaseProductResult>;
   /** Show list of products */
   products?: Maybe<PurchaseProductsResult>;
+  /** Show item prospect */
+  prospect?: Maybe<SalesProspectResult>;
+  /** Show list of prospects */
+  prospects?: Maybe<SalesProspectsResult>;
   /** Show item requisition */
   requisition?: Maybe<PurchaseRequisitionResult>;
   /** Show list of suppliers */
@@ -676,6 +690,17 @@ export type QueryProductArgs = {
 
 
 export type QueryProductsArgs = {
+  itemsPage?: InputMaybe<Scalars['Int']>;
+  page?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type QueryProspectArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryProspectsArgs = {
   itemsPage?: InputMaybe<Scalars['Int']>;
   page?: InputMaybe<Scalars['Int']>;
 };
@@ -808,40 +833,43 @@ export type ResultUsers = Result & {
   users?: Maybe<Array<User>>;
 };
 
-/** Interface to specify the required properties in the response */
+/** Type contact for vacancies */
 export type RrhhContact = {
+  __typename?: 'RrhhContact';
+  /** Contact age */
+  age?: Maybe<Scalars['String']>;
   /** Contact status */
-  attended: Scalars['Boolean'];
-  creationDate: Scalars['String'];
+  attended?: Maybe<Scalars['Boolean']>;
+  /** Item creator and modifier details */
+  details?: Maybe<Details>;
   /** Contact email */
-  email: Scalars['String'];
+  email?: Maybe<Scalars['String']>;
+  /** Unique identifier */
+  id?: Maybe<Scalars['ID']>;
   /** Contact name */
   name: Scalars['String'];
   /** Contact phone */
-  phone: Scalars['String'];
+  phone?: Maybe<Scalars['String']>;
+  /** Vacancy of RRHH */
+  vacantId?: Maybe<RrhhVacant>;
 };
 
-/** Contact input for vacancies or sales */
+/** Contact input for vacancies */
 export type RrhhContactInput = {
   /** Contact age */
   age?: InputMaybe<Scalars['String']>;
   /** Contact status */
   attended?: InputMaybe<Scalars['Boolean']>;
-  /** Contact company */
-  company?: InputMaybe<Scalars['String']>;
-  creationDate?: InputMaybe<Scalars['String']>;
+  /** Item creator and modifier details */
+  details: DetailsInput;
   /** Contact email */
   email: Scalars['String'];
-  /** Contact message */
-  message?: InputMaybe<Scalars['String']>;
   /** Contact name */
   name: Scalars['String'];
   /** Contact phone */
   phone: Scalars['String'];
   /** Unique identifier of a vacancy */
   vacantId?: InputMaybe<Scalars['ID']>;
-  /** Contact work position */
-  workPosition?: InputMaybe<ContactWorkPositionEnum>;
 };
 
 export type RrhhContactResult = Result & {
@@ -852,47 +880,6 @@ export type RrhhContactResult = Result & {
   message: Scalars['String'];
   /** Operation status */
   status: Scalars['Boolean'];
-};
-
-/** Type of object to contact the company. */
-export type RrhhContactRrhh = RrhhContact & {
-  __typename?: 'RrhhContactRrhh';
-  /** Contact age */
-  age?: Maybe<Scalars['String']>;
-  /** Contact status */
-  attended: Scalars['Boolean'];
-  creationDate: Scalars['String'];
-  /** Contact email */
-  email: Scalars['String'];
-  /** Unique identifier */
-  id?: Maybe<Scalars['ID']>;
-  /** Contact name */
-  name: Scalars['String'];
-  /** Contact phone */
-  phone: Scalars['String'];
-  /** Unique identifier of a vacancy */
-  vacantId?: Maybe<RrhhVacant>;
-};
-
-export type RrhhContactSales = RrhhContact & {
-  __typename?: 'RrhhContactSales';
-  /** Contact status */
-  attended: Scalars['Boolean'];
-  /** Contact company */
-  company?: Maybe<Scalars['String']>;
-  creationDate: Scalars['String'];
-  /** Contact email */
-  email: Scalars['String'];
-  /** Unique identifier */
-  id?: Maybe<Scalars['ID']>;
-  /** Contact message */
-  message?: Maybe<Scalars['String']>;
-  /** Contact name */
-  name: Scalars['String'];
-  /** Contact phone */
-  phone: Scalars['String'];
-  /** Contact work position */
-  workPosition?: Maybe<ContactWorkPositionEnum>;
 };
 
 export type RrhhContactsResult = Result & {
@@ -1063,47 +1050,114 @@ export type RrhhWorkAreasResult = Result & {
   workAreas?: Maybe<Array<RrhhWorkArea>>;
 };
 
-export type SaleCustomer = {
-  __typename?: 'SaleCustomer';
+export type SalesCustomer = {
+  __typename?: 'SalesCustomer';
   /** Item details */
-  details: Details;
+  details?: Maybe<Details>;
   /** Unique identifier */
-  id?: Maybe<Scalars['ID']>;
+  id: Scalars['ID'];
   /** Contact information */
-  infoContact?: Maybe<CustomerContact>;
+  infoContact?: Maybe<Contact>;
   /** Customer logo */
-  logo?: Maybe<Scalars['String']>;
+  logo?: Maybe<Image>;
   /** Customer name */
   name: Scalars['String'];
 };
 
-export type SaleCustomerInput = {
+export type SalesCustomerInput = {
   /** Item creator and modifier details */
   details?: InputMaybe<DetailsInput>;
   /** Contact information */
-  infoContact: CustomerContactInput;
+  infoContact: ContactInput;
   /** Customer logo */
-  logo: Scalars['String'];
+  logo?: InputMaybe<Scalars['Upload']>;
   /** Customer name */
   name: Scalars['String'];
 };
 
-export type SaleCustomerResult = Result & {
-  __typename?: 'SaleCustomerResult';
+export type SalesCustomerResult = Result & {
+  __typename?: 'SalesCustomerResult';
   /** Customer */
-  customer?: Maybe<SaleCustomer>;
+  customer?: Maybe<SalesCustomer>;
   /** Operation message */
   message: Scalars['String'];
   /** Operation status */
   status: Scalars['Boolean'];
 };
 
-export type SaleCustomersResult = Result & {
-  __typename?: 'SaleCustomersResult';
+export type SalesCustomersResult = Result & {
+  __typename?: 'SalesCustomersResult';
   /** List of Customers */
-  customers?: Maybe<Array<SaleCustomer>>;
+  customers?: Maybe<Array<SalesCustomer>>;
   /** Operation message */
   message: Scalars['String'];
+  /** Operation status */
+  status: Scalars['Boolean'];
+};
+
+/** Type prospects for follow-up */
+export type SalesProspect = {
+  __typename?: 'SalesProspect';
+  /** Prospect address */
+  address?: Maybe<Address>;
+  /** Contact status */
+  attended?: Maybe<Scalars['Boolean']>;
+  /** Business activity */
+  businessActivity?: Maybe<Scalars['String']>;
+  /** Company */
+  company: Scalars['String'];
+  /** Propsect contact */
+  contact?: Maybe<Contact>;
+  /** Item creator and modifier details */
+  details?: Maybe<Details>;
+  /** Unique identifier */
+  id: Scalars['ID'];
+  /** Prospect logo */
+  logo?: Maybe<Image>;
+  /** Contacts with the prospect */
+  matches?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /** Message of prospect */
+  message?: Maybe<Scalars['String']>;
+};
+
+/** Input of prospects for follow-up */
+export type SalesProspectInput = {
+  /** Prospect address */
+  address?: InputMaybe<AddressInput>;
+  /** Contact status */
+  attended?: InputMaybe<Scalars['Boolean']>;
+  /** Business activity */
+  businessActivity: Scalars['String'];
+  /** Company */
+  company: Scalars['String'];
+  /** Propsect contact */
+  contact?: InputMaybe<ContactInput>;
+  /** Item creator and modifier details */
+  details: DetailsInput;
+  /** Prospect logo */
+  logo?: InputMaybe<Scalars['Upload']>;
+  /** Contacts with the prospect */
+  matches?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  /** Message of prospect */
+  message?: InputMaybe<Scalars['String']>;
+};
+
+export type SalesProspectResult = Result & {
+  __typename?: 'SalesProspectResult';
+  /** Operation message */
+  message: Scalars['String'];
+  /** Prospect */
+  prospect?: Maybe<SalesProspect>;
+  /** Operation status */
+  status: Scalars['Boolean'];
+};
+
+export type SalesProspectsResult = Result & {
+  __typename?: 'SalesProspectsResult';
+  /** Operation message */
+  message: Scalars['String'];
+  /** List of Prospects */
+  prospects?: Maybe<Array<SalesProspect>>;
   /** Operation status */
   status: Scalars['Boolean'];
 };
@@ -1114,29 +1168,6 @@ export enum SupplierClassificationEnum {
   B = 'B',
   C = 'C'
 }
-
-export type SupplierContact = {
-  __typename?: 'SupplierContact';
-  /** Provider email */
-  email?: Maybe<Scalars['String']>;
-  /** Personalized contacts */
-  personalizedContact?: Maybe<Array<Maybe<ContactPersonalized>>>;
-  /** Provider phone */
-  phone?: Maybe<Scalars['String']>;
-  /** Provider website */
-  web?: Maybe<Scalars['String']>;
-};
-
-export type SupplierContactInput = {
-  /** Provider email */
-  email: Scalars['String'];
-  /** Personalized contacts */
-  personalizedContact?: InputMaybe<Array<InputMaybe<ContactPersonalizedInput>>>;
-  /** Provider phone */
-  phone: Scalars['String'];
-  /** Provider website */
-  web?: InputMaybe<Scalars['String']>;
-};
 
 export type SupplierTaxes = {
   __typename?: 'SupplierTaxes';
@@ -1291,13 +1322,27 @@ export type VacantDescriptionInput = {
   time?: InputMaybe<Scalars['Int']>;
 };
 
+/** Prospect contact position */
+export enum WorkPositionEnum {
+  Compras = 'COMPRAS',
+  Desarrollador = 'DESARROLLADOR',
+  Gerente = 'GERENTE',
+  Mercadotecnia = 'MERCADOTECNIA',
+  Otros = 'OTROS',
+  RecursosHumanos = 'RECURSOS_HUMANOS',
+  Sistemas = 'SISTEMAS',
+  Ventas = 'VENTAS'
+}
+
 export type AddressFragmentFragment = { __typename?: 'Address', street?: string | null, colony?: string | null, municipality?: string | null, state?: string | null, country?: string | null, zipCode?: number | null, number?: { __typename?: 'AddressNumber', interior?: string | null, exterior?: string | null } | null, streets?: { __typename?: 'AddressStreets', a?: string | null, b?: string | null } | null };
+
+export type ContactFragmentFragment = { __typename?: 'Contact', email?: string | null, phone?: string | null, web?: string | null, personalizedContact?: Array<{ __typename?: 'ContactPersonalized', title?: PersonalizedTitleEnum | null, name?: string | null, workPosition?: WorkPositionEnum | null, email?: string | null, phone?: string | null } | null> | null };
 
 export type DetailsFragmentFragment = { __typename?: 'Details', status?: boolean | null, creationDate?: string | null, lastModification?: string | null, creatorUser?: { __typename?: 'User', name: string, email: string } | null, modifierUserId?: { __typename?: 'User', name: string, email: string } | null };
 
 export type ImageFragmentFragment = { __typename?: 'Image', height?: number | null, width?: number | null, url?: string | null };
 
-export type SupplierFragmentFragment = { __typename?: 'PurchaseSupplier', id: string, name: string, deliveryTime?: number | null, passed?: boolean | null, classification?: SupplierClassificationEnum | null, logo?: { __typename?: 'Image', height?: number | null, width?: number | null, url?: string | null } | null, infoContact?: { __typename?: 'SupplierContact', email?: string | null, phone?: string | null, web?: string | null, personalizedContact?: Array<{ __typename?: 'ContactPersonalized', title?: PersonalizedTitleEnum | null, name?: string | null, position?: string | null, email?: string | null, phone?: string | null } | null> | null } | null, address?: { __typename?: 'Address', street?: string | null, colony?: string | null, municipality?: string | null, state?: string | null, country?: string | null, zipCode?: number | null, number?: { __typename?: 'AddressNumber', interior?: string | null, exterior?: string | null } | null, streets?: { __typename?: 'AddressStreets', a?: string | null, b?: string | null } | null } | null, taxes?: { __typename?: 'SupplierTaxes', type?: SupplierTypeTaxesEnum | null, rfc?: string | null } | null, productId?: Array<{ __typename?: 'PurchaseProduct', id: string, name: string, description?: string | null, brand?: string | null, audited: boolean, type?: { __typename?: 'ProductType', type?: ProductTypeEnum | null, description?: string | null } | null } | null> | null, details: { __typename?: 'Details', status?: boolean | null, creationDate?: string | null, lastModification?: string | null, creatorUser?: { __typename?: 'User', name: string, email: string } | null, modifierUserId?: { __typename?: 'User', name: string, email: string } | null } };
+export type SupplierFragmentFragment = { __typename?: 'PurchaseSupplier', id: string, name: string, deliveryTime?: number | null, passed?: boolean | null, classification?: SupplierClassificationEnum | null, logo?: { __typename?: 'Image', height?: number | null, width?: number | null, url?: string | null } | null, infoContact?: { __typename?: 'Contact', email?: string | null, phone?: string | null, web?: string | null, personalizedContact?: Array<{ __typename?: 'ContactPersonalized', title?: PersonalizedTitleEnum | null, name?: string | null, workPosition?: WorkPositionEnum | null, email?: string | null, phone?: string | null } | null> | null } | null, address?: { __typename?: 'Address', street?: string | null, colony?: string | null, municipality?: string | null, state?: string | null, country?: string | null, zipCode?: number | null, number?: { __typename?: 'AddressNumber', interior?: string | null, exterior?: string | null } | null, streets?: { __typename?: 'AddressStreets', a?: string | null, b?: string | null } | null } | null, taxes?: { __typename?: 'SupplierTaxes', type?: SupplierTypeTaxesEnum | null, rfc?: string | null } | null, productId?: Array<{ __typename?: 'PurchaseProduct', id: string, name: string, description?: string | null, brand?: string | null, audited: boolean, type?: { __typename?: 'ProductType', type?: ProductTypeEnum | null, description?: string | null } | null } | null> | null, details: { __typename?: 'Details', status?: boolean | null, creationDate?: string | null, lastModification?: string | null, creatorUser?: { __typename?: 'User', name: string, email: string } | null, modifierUserId?: { __typename?: 'User', name: string, email: string } | null } };
 
 export type PermissionFragmentFragment = { __typename?: 'RrhhPermission', id: string, type: PermissionTypePermissionEnum, reason: string, from: string, to: string, authorization: boolean, userId: { __typename?: 'User', name: string, lastname: string, email: string }, details: { __typename?: 'Details', status?: boolean | null, creationDate?: string | null, lastModification?: string | null, creatorUser?: { __typename?: 'User', name: string, email: string } | null, modifierUserId?: { __typename?: 'User', name: string, email: string } | null } };
 
@@ -1307,12 +1352,14 @@ export type VacantFragmentFragment = { __typename?: 'RrhhVacant', id?: string | 
 
 export type WorkAreaFragmentFragment = { __typename?: 'RrhhWorkArea', id?: string | null, title: string, description?: string | null, image?: { __typename?: 'Image', height?: number | null, width?: number | null, url?: string | null } | null, details: { __typename?: 'Details', status?: boolean | null, creationDate?: string | null, lastModification?: string | null, creatorUser?: { __typename?: 'User', name: string, email: string } | null, modifierUserId?: { __typename?: 'User', name: string, email: string } | null } };
 
-export type CustomerFragmentFragment = { __typename?: 'SaleCustomer', id?: string | null, name: string, logo?: string | null, infoContact?: { __typename?: 'CustomerContact', email?: string | null, phone?: string | null, web?: string | null, personalizedContact?: Array<{ __typename?: 'ContactPersonalized', title?: PersonalizedTitleEnum | null, name?: string | null, position?: string | null, email?: string | null, phone?: string | null } | null> | null } | null, details: { __typename?: 'Details', status?: boolean | null, creationDate?: string | null, lastModification?: string | null, creatorUser?: { __typename?: 'User', name: string, email: string } | null, modifierUserId?: { __typename?: 'User', name: string, email: string } | null } };
+export type CustomerFragmentFragment = { __typename?: 'SalesCustomer', id: string, name: string, logo?: { __typename?: 'Image', height?: number | null, width?: number | null, url?: string | null } | null, infoContact?: { __typename?: 'Contact', email?: string | null, phone?: string | null, web?: string | null, personalizedContact?: Array<{ __typename?: 'ContactPersonalized', title?: PersonalizedTitleEnum | null, name?: string | null, workPosition?: WorkPositionEnum | null, email?: string | null, phone?: string | null } | null> | null } | null, details?: { __typename?: 'Details', status?: boolean | null, creationDate?: string | null, lastModification?: string | null, creatorUser?: { __typename?: 'User', name: string, email: string } | null, modifierUserId?: { __typename?: 'User', name: string, email: string } | null } | null };
+
+export type ProspectFragmentFragment = { __typename?: 'SalesProspect', id: string, company: string, businessActivity?: string | null, message?: string | null, attended?: boolean | null, matches?: Array<string | null> | null, logo?: { __typename?: 'Image', height?: number | null, width?: number | null, url?: string | null } | null, contact?: { __typename?: 'Contact', email?: string | null, phone?: string | null, web?: string | null, personalizedContact?: Array<{ __typename?: 'ContactPersonalized', title?: PersonalizedTitleEnum | null, name?: string | null, workPosition?: WorkPositionEnum | null, email?: string | null, phone?: string | null } | null> | null } | null, address?: { __typename?: 'Address', street?: string | null, colony?: string | null, municipality?: string | null, state?: string | null, country?: string | null, zipCode?: number | null, number?: { __typename?: 'AddressNumber', interior?: string | null, exterior?: string | null } | null, streets?: { __typename?: 'AddressStreets', a?: string | null, b?: string | null } | null } | null, details?: { __typename?: 'Details', status?: boolean | null, creationDate?: string | null, lastModification?: string | null, creatorUser?: { __typename?: 'User', name: string, email: string } | null, modifierUserId?: { __typename?: 'User', name: string, email: string } | null } | null };
 
 export type GetSuppliersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetSuppliersQuery = { __typename?: 'Query', suppliers?: { __typename?: 'PurchaseSuppliersResult', status: boolean, message: string, suppliers?: Array<{ __typename?: 'PurchaseSupplier', id: string, name: string, deliveryTime?: number | null, passed?: boolean | null, classification?: SupplierClassificationEnum | null, logo?: { __typename?: 'Image', height?: number | null, width?: number | null, url?: string | null } | null, infoContact?: { __typename?: 'SupplierContact', email?: string | null, phone?: string | null, web?: string | null, personalizedContact?: Array<{ __typename?: 'ContactPersonalized', title?: PersonalizedTitleEnum | null, name?: string | null, position?: string | null, email?: string | null, phone?: string | null } | null> | null } | null, address?: { __typename?: 'Address', street?: string | null, colony?: string | null, municipality?: string | null, state?: string | null, country?: string | null, zipCode?: number | null, number?: { __typename?: 'AddressNumber', interior?: string | null, exterior?: string | null } | null, streets?: { __typename?: 'AddressStreets', a?: string | null, b?: string | null } | null } | null, taxes?: { __typename?: 'SupplierTaxes', type?: SupplierTypeTaxesEnum | null, rfc?: string | null } | null, productId?: Array<{ __typename?: 'PurchaseProduct', id: string, name: string, description?: string | null, brand?: string | null, audited: boolean, type?: { __typename?: 'ProductType', type?: ProductTypeEnum | null, description?: string | null } | null } | null> | null, details: { __typename?: 'Details', status?: boolean | null, creationDate?: string | null, lastModification?: string | null, creatorUser?: { __typename?: 'User', name: string, email: string } | null, modifierUserId?: { __typename?: 'User', name: string, email: string } | null } }> | null } | null };
+export type GetSuppliersQuery = { __typename?: 'Query', suppliers?: { __typename?: 'PurchaseSuppliersResult', status: boolean, message: string, suppliers?: Array<{ __typename?: 'PurchaseSupplier', id: string, name: string, deliveryTime?: number | null, passed?: boolean | null, classification?: SupplierClassificationEnum | null, logo?: { __typename?: 'Image', height?: number | null, width?: number | null, url?: string | null } | null, infoContact?: { __typename?: 'Contact', email?: string | null, phone?: string | null, web?: string | null, personalizedContact?: Array<{ __typename?: 'ContactPersonalized', title?: PersonalizedTitleEnum | null, name?: string | null, workPosition?: WorkPositionEnum | null, email?: string | null, phone?: string | null } | null> | null } | null, address?: { __typename?: 'Address', street?: string | null, colony?: string | null, municipality?: string | null, state?: string | null, country?: string | null, zipCode?: number | null, number?: { __typename?: 'AddressNumber', interior?: string | null, exterior?: string | null } | null, streets?: { __typename?: 'AddressStreets', a?: string | null, b?: string | null } | null } | null, taxes?: { __typename?: 'SupplierTaxes', type?: SupplierTypeTaxesEnum | null, rfc?: string | null } | null, productId?: Array<{ __typename?: 'PurchaseProduct', id: string, name: string, description?: string | null, brand?: string | null, audited: boolean, type?: { __typename?: 'ProductType', type?: ProductTypeEnum | null, description?: string | null } | null } | null> | null, details: { __typename?: 'Details', status?: boolean | null, creationDate?: string | null, lastModification?: string | null, creatorUser?: { __typename?: 'User', name: string, email: string } | null, modifierUserId?: { __typename?: 'User', name: string, email: string } | null } }> | null } | null };
 
 export type GetPermissionsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1337,20 +1384,28 @@ export type GetWorkAreasQuery = { __typename?: 'Query', workAreas?: { __typename
 export type GetCustomersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCustomersQuery = { __typename?: 'Query', customers?: { __typename?: 'SaleCustomersResult', status: boolean, message: string, customers?: Array<{ __typename?: 'SaleCustomer', id?: string | null, name: string, logo?: string | null, infoContact?: { __typename?: 'CustomerContact', email?: string | null, phone?: string | null, web?: string | null, personalizedContact?: Array<{ __typename?: 'ContactPersonalized', title?: PersonalizedTitleEnum | null, name?: string | null, position?: string | null, email?: string | null, phone?: string | null } | null> | null } | null, details: { __typename?: 'Details', status?: boolean | null, creationDate?: string | null, lastModification?: string | null, creatorUser?: { __typename?: 'User', name: string, email: string } | null, modifierUserId?: { __typename?: 'User', name: string, email: string } | null } }> | null } | null };
+export type GetCustomersQuery = { __typename?: 'Query', customers?: { __typename?: 'SalesCustomersResult', status: boolean, message: string, customers?: Array<{ __typename?: 'SalesCustomer', id: string, name: string, logo?: { __typename?: 'Image', height?: number | null, width?: number | null, url?: string | null } | null, infoContact?: { __typename?: 'Contact', email?: string | null, phone?: string | null, web?: string | null, personalizedContact?: Array<{ __typename?: 'ContactPersonalized', title?: PersonalizedTitleEnum | null, name?: string | null, workPosition?: WorkPositionEnum | null, email?: string | null, phone?: string | null } | null> | null } | null, details?: { __typename?: 'Details', status?: boolean | null, creationDate?: string | null, lastModification?: string | null, creatorUser?: { __typename?: 'User', name: string, email: string } | null, modifierUserId?: { __typename?: 'User', name: string, email: string } | null } | null }> | null } | null };
 
+export type GetProspectsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetProspectsQuery = { __typename?: 'Query', prospects?: { __typename?: 'SalesProspectsResult', status: boolean, message: string, prospects?: Array<{ __typename?: 'SalesProspect', id: string, company: string, businessActivity?: string | null, message?: string | null, attended?: boolean | null, matches?: Array<string | null> | null, logo?: { __typename?: 'Image', height?: number | null, width?: number | null, url?: string | null } | null, contact?: { __typename?: 'Contact', email?: string | null, phone?: string | null, web?: string | null, personalizedContact?: Array<{ __typename?: 'ContactPersonalized', title?: PersonalizedTitleEnum | null, name?: string | null, workPosition?: WorkPositionEnum | null, email?: string | null, phone?: string | null } | null> | null } | null, address?: { __typename?: 'Address', street?: string | null, colony?: string | null, municipality?: string | null, state?: string | null, country?: string | null, zipCode?: number | null, number?: { __typename?: 'AddressNumber', interior?: string | null, exterior?: string | null } | null, streets?: { __typename?: 'AddressStreets', a?: string | null, b?: string | null } | null } | null, details?: { __typename?: 'Details', status?: boolean | null, creationDate?: string | null, lastModification?: string | null, creatorUser?: { __typename?: 'User', name: string, email: string } | null, modifierUserId?: { __typename?: 'User', name: string, email: string } | null } | null }> | null } | null };
+
+export const ContactFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ContactFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Contact"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"web"}},{"kind":"Field","name":{"kind":"Name","value":"personalizedContact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"workPosition"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}}]}}]}}]} as unknown as DocumentNode<ContactFragmentFragment, unknown>;
 export const AddressFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"AddressFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Address"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"street"}},{"kind":"Field","name":{"kind":"Name","value":"number"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"interior"}},{"kind":"Field","name":{"kind":"Name","value":"exterior"}}]}},{"kind":"Field","name":{"kind":"Name","value":"colony"}},{"kind":"Field","name":{"kind":"Name","value":"municipality"}},{"kind":"Field","name":{"kind":"Name","value":"state"}},{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"zipCode"}},{"kind":"Field","name":{"kind":"Name","value":"streets"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"a"}},{"kind":"Field","name":{"kind":"Name","value":"b"}}]}}]}}]} as unknown as DocumentNode<AddressFragmentFragment, unknown>;
 export const DetailsFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"DetailsFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Details"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"creatorUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"creationDate"}},{"kind":"Field","name":{"kind":"Name","value":"modifierUserId"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"lastModification"}}]}}]} as unknown as DocumentNode<DetailsFragmentFragment, unknown>;
-export const SupplierFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SupplierFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PurchaseSupplier"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"logo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"infoContact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"web"}},{"kind":"Field","name":{"kind":"Name","value":"personalizedContact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"AddressFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"taxes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"rfc"}}]}},{"kind":"Field","name":{"kind":"Name","value":"deliveryTime"}},{"kind":"Field","name":{"kind":"Name","value":"passed"}},{"kind":"Field","name":{"kind":"Name","value":"classification"}},{"kind":"Field","name":{"kind":"Name","value":"productId"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"type"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"brand"}},{"kind":"Field","name":{"kind":"Name","value":"audited"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DetailsFragment"}}]}}]}},...AddressFragmentFragmentDoc.definitions,...DetailsFragmentFragmentDoc.definitions]} as unknown as DocumentNode<SupplierFragmentFragment, unknown>;
+export const SupplierFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"SupplierFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"PurchaseSupplier"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"logo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"infoContact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ContactFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"AddressFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"taxes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"rfc"}}]}},{"kind":"Field","name":{"kind":"Name","value":"deliveryTime"}},{"kind":"Field","name":{"kind":"Name","value":"passed"}},{"kind":"Field","name":{"kind":"Name","value":"classification"}},{"kind":"Field","name":{"kind":"Name","value":"productId"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"type"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"brand"}},{"kind":"Field","name":{"kind":"Name","value":"audited"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DetailsFragment"}}]}}]}},...ContactFragmentFragmentDoc.definitions,...AddressFragmentFragmentDoc.definitions,...DetailsFragmentFragmentDoc.definitions]} as unknown as DocumentNode<SupplierFragmentFragment, unknown>;
 export const PermissionFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PermissionFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"RrhhPermission"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"reason"}},{"kind":"Field","name":{"kind":"Name","value":"userId"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"lastname"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"from"}},{"kind":"Field","name":{"kind":"Name","value":"to"}},{"kind":"Field","name":{"kind":"Name","value":"authorization"}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DetailsFragment"}}]}}]}},...DetailsFragmentFragmentDoc.definitions]} as unknown as DocumentNode<PermissionFragmentFragment, unknown>;
 export const UserFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"lastname"}},{"kind":"Field","name":{"kind":"Name","value":"birthday"}},{"kind":"Field","name":{"kind":"Name","value":"gender"}},{"kind":"Field","name":{"kind":"Name","value":"maritalStatus"}},{"kind":"Field","name":{"kind":"Name","value":"curp"}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"AddressFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"password"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"lastSession"}},{"kind":"Field","name":{"kind":"Name","value":"rfc"}},{"kind":"Field","name":{"kind":"Name","value":"schooling"}},{"kind":"Field","name":{"kind":"Name","value":"nss"}},{"kind":"Field","name":{"kind":"Name","value":"infonavitCredit"}},{"kind":"Field","name":{"kind":"Name","value":"job"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"workAreaId"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"schedule"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"from"}},{"kind":"Field","name":{"kind":"Name","value":"to"}}]}},{"kind":"Field","name":{"kind":"Name","value":"salary"}},{"kind":"Field","name":{"kind":"Name","value":"accountNumber"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DetailsFragment"}}]}}]}},...AddressFragmentFragmentDoc.definitions,...DetailsFragmentFragmentDoc.definitions]} as unknown as DocumentNode<UserFragmentFragment, unknown>;
 export const VacantFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"VacantFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"RrhhVacant"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"workAreaId"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"benefits"}},{"kind":"Field","name":{"kind":"Name","value":"time"}},{"kind":"Field","name":{"kind":"Name","value":"salary"}}]}},{"kind":"Field","name":{"kind":"Name","value":"available"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"candidates"}},{"kind":"Field","name":{"kind":"Name","value":"available"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DetailsFragment"}}]}}]}},...DetailsFragmentFragmentDoc.definitions]} as unknown as DocumentNode<VacantFragmentFragment, unknown>;
 export const ImageFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ImageFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Image"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]} as unknown as DocumentNode<ImageFragmentFragment, unknown>;
 export const WorkAreaFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"WorkAreaFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"RrhhWorkArea"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ImageFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DetailsFragment"}}]}}]}},...ImageFragmentFragmentDoc.definitions,...DetailsFragmentFragmentDoc.definitions]} as unknown as DocumentNode<WorkAreaFragmentFragment, unknown>;
-export const CustomerFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CustomerFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SaleCustomer"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"logo"}},{"kind":"Field","name":{"kind":"Name","value":"infoContact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"web"}},{"kind":"Field","name":{"kind":"Name","value":"personalizedContact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DetailsFragment"}}]}}]}},...DetailsFragmentFragmentDoc.definitions]} as unknown as DocumentNode<CustomerFragmentFragment, unknown>;
+export const CustomerFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CustomerFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SalesCustomer"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"logo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ImageFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"infoContact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ContactFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DetailsFragment"}}]}}]}},...ImageFragmentFragmentDoc.definitions,...ContactFragmentFragmentDoc.definitions,...DetailsFragmentFragmentDoc.definitions]} as unknown as DocumentNode<CustomerFragmentFragment, unknown>;
+export const ProspectFragmentFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ProspectFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"SalesProspect"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"company"}},{"kind":"Field","name":{"kind":"Name","value":"businessActivity"}},{"kind":"Field","name":{"kind":"Name","value":"logo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ImageFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contact"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ContactFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"address"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"AddressFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"attended"}},{"kind":"Field","name":{"kind":"Name","value":"matches"}},{"kind":"Field","name":{"kind":"Name","value":"details"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DetailsFragment"}}]}}]}},...ImageFragmentFragmentDoc.definitions,...ContactFragmentFragmentDoc.definitions,...AddressFragmentFragmentDoc.definitions,...DetailsFragmentFragmentDoc.definitions]} as unknown as DocumentNode<ProspectFragmentFragment, unknown>;
 export const GetSuppliersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetSuppliers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"suppliers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"suppliers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"SupplierFragment"}}]}}]}}]}},...SupplierFragmentFragmentDoc.definitions]} as unknown as DocumentNode<GetSuppliersQuery, GetSuppliersQueryVariables>;
 export const GetPermissionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPermissions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"permissions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"permissions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PermissionFragment"}}]}}]}}]}},...PermissionFragmentFragmentDoc.definitions]} as unknown as DocumentNode<GetPermissionsQuery, GetPermissionsQueryVariables>;
 export const GetUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"users"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserFragment"}}]}}]}}]}},...UserFragmentFragmentDoc.definitions]} as unknown as DocumentNode<GetUsersQuery, GetUsersQueryVariables>;
 export const GetVacantsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetVacants"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"vacants"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"vacants"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"VacantFragment"}}]}}]}}]}},...VacantFragmentFragmentDoc.definitions]} as unknown as DocumentNode<GetVacantsQuery, GetVacantsQueryVariables>;
 export const GetWorkAreasDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetWorkAreas"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"workAreas"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"workAreas"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"WorkAreaFragment"}}]}}]}}]}},...WorkAreaFragmentFragmentDoc.definitions]} as unknown as DocumentNode<GetWorkAreasQuery, GetWorkAreasQueryVariables>;
 export const GetCustomersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCustomers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"customers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"customers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CustomerFragment"}}]}}]}}]}},...CustomerFragmentFragmentDoc.definitions]} as unknown as DocumentNode<GetCustomersQuery, GetCustomersQueryVariables>;
+export const GetProspectsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetProspects"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"prospects"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"prospects"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ProspectFragment"}}]}}]}}]}},...ProspectFragmentFragmentDoc.definitions]} as unknown as DocumentNode<GetProspectsQuery, GetProspectsQueryVariables>;

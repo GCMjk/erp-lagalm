@@ -32,9 +32,9 @@ const columns: GridColDef[] = [
         sortable: false,
         renderCell: (params: GridRenderCellParams) => {
             return (
-                <NextLink href={`/app/areas/${params.row.id}`} passHref>
+                <NextLink href={`/app/ventas/clientes/${params.row.id}`} passHref>
                     <Link underline='always'>
-                        Ver área
+                        Ver elemento
                     </Link>
                 </NextLink>
             )
@@ -42,16 +42,16 @@ const columns: GridColDef[] = [
     }
 ]
 
-const AreaTrabajosPage = () => {
+const ClientesPage = () => {
 
     const { data, loading } = useQuery(GetCustomersDocument);
-    const rows = data?.customers?.customers?.map(({ id, name, infoContact, details: { status } }) => {
+    const rows = data?.customers?.customers?.map(({ id, name, infoContact, details }) => {
         return {
             id,
             name,
             email: infoContact?.email,
             web: infoContact?.web,
-            available: status
+            available: details?.status
         }
     })
 
@@ -77,4 +77,4 @@ const AreaTrabajosPage = () => {
     )
 }
 
-export default AreaTrabajosPage
+export default ClientesPage

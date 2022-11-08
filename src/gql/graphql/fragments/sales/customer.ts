@@ -1,23 +1,18 @@
 import gql from "graphql-tag"
-import { detailsFragment } from "../details"
+import { imageFragment, contactFragment, detailsFragment } from "@gql/graphql/fragments"
 
 export const customerFragment = gql`
+    ${imageFragment}
+    ${contactFragment}
     ${detailsFragment}
-    fragment CustomerFragment on SaleCustomer {
+    fragment CustomerFragment on SalesCustomer {
         id
         name
-        logo
+        logo {
+            ...ImageFragment
+        }
         infoContact {
-            email
-            phone
-            web
-            personalizedContact {
-                title
-                name
-                position
-                email
-                phone
-            }
+            ...ContactFragment
         }
         details {
             ...DetailsFragment

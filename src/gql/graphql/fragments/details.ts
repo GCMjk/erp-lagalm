@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-export const detailsFragment: any = gql`
+export const detailsFragment = gql`
     fragment DetailsFragment on Details {
         status
         creatorUser {
