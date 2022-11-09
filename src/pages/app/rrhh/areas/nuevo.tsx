@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Grid, MenuItem, Select, TextField, Typography } from "@mui/material"
+import { Box, Button, FormControl, Grid, MenuItem, Select, TextField } from "@mui/material"
 import { ErpLayout } from "@components/layouts"
 
 const NuevaAreaTrabajoPage = () => {
