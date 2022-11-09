@@ -13,3 +13,4 @@ export * from './sales/prospect'
 
 export * from './purchases/supplier'
 export * from './purchases/product'
+export * from './purchases/requisition'
