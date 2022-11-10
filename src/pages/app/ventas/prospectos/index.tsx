@@ -47,7 +47,7 @@ const columns: GridColDef[] = [
         sortable: false,
         renderCell: (params: GridRenderCellParams) => {
             return (
-                <NextLink href={`/app/ventas/prospectos/${params.row.id}`} passHref>
+                <NextLink href={`/app/ventas/prospectos/${params.row.id}`} passHref prefetch={false}>
                     <Link underline='always'>
                         Ver elemento
                     </Link>

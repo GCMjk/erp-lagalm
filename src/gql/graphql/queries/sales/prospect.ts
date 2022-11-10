@@ -13,3 +13,16 @@ const getProspects = gql`
         }
     }
 `
+
+const getProspect = gql`
+    ${prospectFragment}
+    query getProspect($prospectId: ID!) {
+        prospect(id: $prospectId) {
+            status
+            message
+            prospect {
+                ...ProspectFragment
+            }
+        }
+    }
+`

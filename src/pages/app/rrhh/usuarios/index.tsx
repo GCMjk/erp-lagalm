@@ -7,7 +7,7 @@ import { GetUsersDocument } from '@gql/graphql'
 
 import { ErpLayout } from '@components/layouts'
 import { LoadingScreen } from '@components/ui'
-import { formatDate } from '@hooks/index'
+import { formatDate } from '@libs/index'
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 50 },
