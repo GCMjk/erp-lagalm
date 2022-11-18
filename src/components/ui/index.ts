@@ -7,3 +7,4 @@ export * from './Footer';
 export * from './Header';
 export * from './Sidebar';
 export * from './LoadingScreen';
+export * from './SectionForm';
