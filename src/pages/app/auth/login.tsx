@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useMutation } from '@apollo/client'
 import { LoginDocument } from '@gql/graphql'
 
-import { validations } from '@libs/index'
+import { isEmail } from '@libs/validations'
 import { AuthLayout } from '@components/layouts'
 
 type FormDataLogin = {
@@ -76,7 +76,7 @@ const LoginPage = () => {
                                 fullWidth
                                 {...register('email', {
                                     required: 'Este campo es requerido',
-                                    validate: validations.isEmail
+                                    validate: isEmail
                                 })}
                                 error={!!errors.email}
                                 helperText={errors.email?.message}

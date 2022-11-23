@@ -50,7 +50,7 @@ export type AddressInput = {
   /** Between which streets is it located (a and b) */
   streets?: InputMaybe<AddressStreetsInput>;
   /** Postal code */
-  zipCode: Scalars['Int'];
+  zipCode: Scalars['String'];
 };
 
 export type AddressNumber = {
