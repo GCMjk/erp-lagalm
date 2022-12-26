@@ -1,5 +1,5 @@
 import gql from "graphql-tag"
-import { customerFragment } from "@gql/graphql/fragments"
+import { customerFragment } from "@graphql/fragments"
 
 const getCustomers = gql`
     ${customerFragment}

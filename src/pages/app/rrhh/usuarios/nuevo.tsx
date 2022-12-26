@@ -3,11 +3,11 @@ import { Grid, TextField, Button, Snackbar, Alert, FormControl, InputLabel, Sele
 
 import { useForm } from 'react-hook-form'
 import { useMutation, useQuery } from '@apollo/client'
-import { RegisterDocument, UserInput, UserGenderEnum, UserMaritalStatusEnum, UserRoleEnum, UserSchoolingEnum, GetWorkAreasDocument } from '@gql/graphql'
+import { RegisterDocument, UserInput, UserGenderEnum, UserMaritalStatusEnum, UserRoleEnum, UserSchoolingEnum, GetWorkAreasDocument } from '@gql'
 
 import { ErpLayout } from '@components/layouts'
 import { SectionForm } from '@components/ui'
-import { isDate, isEmail, isCurp, isZipCode, isPhone, isRfc, isNss, isNumberCard, isTime, isPrice } from '@libs/validations'
+import { isDate, isEmail, isCurp, isZipCode, isPhone, isRfc, isNss, isNumberCard, isTime, isPrice } from '@validations'
 
 const NuevoUsuarioPage = () => {
     const [toast, setToast] = useState({

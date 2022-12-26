@@ -3,7 +3,7 @@ import { Chip, Link, Grid, Typography } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
 import { useQuery } from '@apollo/client'
-import { GetPermissionsDocument } from '@gql/graphql'
+import { GetPermissionsDocument } from '@gql'
 
 import { ErpLayout } from '@components/layouts'
 import { LoadingScreen } from '@components/ui'

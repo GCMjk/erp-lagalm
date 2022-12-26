@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { workAreaFragment } from '@gql/graphql/fragments'
+import { workAreaFragment } from '@graphql/fragments'
 
 const getWorkArea = gql`
     query GetWorkAreas {

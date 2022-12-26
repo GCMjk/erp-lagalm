@@ -1,4 +1,4 @@
-import { Address } from "@gql/graphql";
+import { Address } from "@gql";
 
 export const formatAddress = (address: Address) => {
     const { street, number, colony, municipality, state, zipCode, country, streets } = address

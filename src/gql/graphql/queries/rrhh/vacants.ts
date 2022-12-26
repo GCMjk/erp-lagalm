@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { vacantFragment } from '@gql/graphql/fragments'
+import { vacantFragment } from '@graphql/fragments'
 
 const getVacants = gql`
     ${vacantFragment}

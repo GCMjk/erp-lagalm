@@ -3,9 +3,9 @@ import { Box, Grid, TextField, Typography, Button, Snackbar, Alert } from '@mui/
 
 import { useForm } from 'react-hook-form'
 import { useMutation } from '@apollo/client'
-import { LoginDocument } from '@gql/graphql'
+import { LoginDocument } from '@gql'
 
-import { isEmail } from '@libs/validations'
+import { isEmail } from '@validations'
 import { AuthLayout } from '@components/layouts'
 
 type FormDataLogin = {

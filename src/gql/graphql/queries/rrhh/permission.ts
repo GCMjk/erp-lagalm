@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { permissionFragment } from '@gql/graphql/fragments'
+import { permissionFragment } from '@graphql/fragments'
 
 const getPermission = gql`
     query GetPermissions {

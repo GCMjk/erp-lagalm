@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-import { userFragment, detailsFragment } from '@gql/graphql/fragments';
+import { userFragment, detailsFragment } from '@graphql/fragments';
 
 export const permissionFragment = gql`
     ${userFragment}

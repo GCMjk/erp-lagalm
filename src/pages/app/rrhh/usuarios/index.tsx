@@ -3,11 +3,11 @@ import { Chip, Link, Grid, Typography } from '@mui/material'
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 
 import { useQuery } from '@apollo/client'
-import { GetUsersDocument } from '@gql/graphql'
+import { GetUsersDocument } from '@gql'
 
 import { ErpLayout } from '@components/layouts'
 import { LoadingScreen } from '@components/ui'
-import { formatDate } from '@libs/index'
+import { formatDate } from '@libs'
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 50 },

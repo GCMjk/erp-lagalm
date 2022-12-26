@@ -6,11 +6,11 @@ import { Box, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } fro
 import { Language, Email, Phone, ConnectWithoutContact } from '@mui/icons-material'
 
 import { useQuery } from '@apollo/client'
-import { Address, GetProspectDocument } from '@gql/graphql'
+import { Address, GetProspectDocument } from '@gql'
 
 import { ErpLayout } from '@components/layouts'
 import { LoadingScreen } from '@components/ui'
-import { formatAddress, formatDate } from '@libs/index'
+import { formatAddress, formatDate } from '@libs'
 
 const ProspectoPage = () => {
     const { query } = useRouter();
